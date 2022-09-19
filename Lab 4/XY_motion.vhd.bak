@@ -1,0 +1,15 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+Entity XY_motion is port(
+
+				X_GT, X_EQ, X_LT, Motion, Y_LT, Y_EQ, Y_GT, extender_out					:in std_logic;
+				clk_en, up_down, error, Captire_XY, clk_en, up_down, extender_en				:out std_logic_vector(7 downto 0)
+					
+				);
+end Entity;
+
+architecture of XY_motion is 
+
+component Compx4X of XY_motion is  
