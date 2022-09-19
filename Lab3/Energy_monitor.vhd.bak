@@ -1,0 +1,116 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity Energy_monitor is port (
+
+		GT, EQ, LT,Vacation_mode, MC_test_mode, window_open, door_open : in std_logic;
+		decrease_temp, increase_temp, run_nEN, furnace, at_temp, AC, blower, window, door, vacation : out std_logic
+		
+		);
+
+end Energy_monitor;
+
+architecture control of Energy_montitor is 
+
+component Comx4 port (
+	
+A	   	:  in  std_logic_vector(3 downto 0);  
+B	  		:  in  std_logic_vector(3 downto 0);  
+ 
+AGTB		:  out std_logic;
+AEQB		:  out std_logic;
+ALTB		:  out std_logic
+);
+
+end component;
+
+component HVAC port (
+
+		HVAC_SIM					: in boolean;
+		clk						: in std_logic; 
+		run_n		   			: in std_logic;
+		increase, decrease	: in std_logic;
+		temp						: out std_logic_vector (3 downto 0)
+		
+		);
+end component;
+
+component mux port (
+
+		mux1, mux0 : in std_logic_vector(3 downto 0);
+		mux_select 										: in std_logic; 
+		hex_out				 							: out std_logic_vector(3 downto 0)
+		);
+end component;
+
+component inverter port (
+
+		pb_in1, pb_in2, pb_in3, pb_in4 : std_logic;
+		pb_out1, pb_out2, pb_out3, pb_out4: std_logic
+		
+		);
+		
+end component;
+
+begin 
+
+A <= hex_out;
+B <= temp;
+--input for Energy_monitor
+AGTB <= GT;
+AEQB <= EQ;
+ALTB <= LT;
+pb_out1 <= vacation_mode; 
+pb_out2 <= MC_test_mode;
+pb_out3 <= window_open;
+pb_out4 <= door_open;
+-- output fot Energy_monitor
+
+process_temp: Process (GT ,EQ, LT) is
+
+begin 
+	if(EQ = '1') then
+		run_nEN <= '1';
+		at_temp <= '1';
+		blower <= '0';
+		
+	elsif (GT = '1') then
+		 increase <= '1';
+		 furnace <= '1';
+		 blower <= '1';
+	
+	
+	elsif (LT = '1') then
+		decrease <= '1';
+		AC <= '1';
+		blower <= '1';
+	end if;
+			
+	
+end;
+
+process_mode: Process (window_open, door_open, MC_test_mode, vacation_mode) is
+
+begin 
+	if (window_open = '1' OR door_open = '1' OR MC_test_mode = '1') then
+		run_nEN <= '1';
+		blower <= '0';
+	end if;
+	
+	if (door_open = '1') then
+		door <= '1';
+	end if;
+		
+	if (window_open = '1' ) then
+		window <= '1';
+	end if;
+	
+	if (vacation_mode = '1') then
+		vacation <= '1';
+	end if;
+
+end;
+-- input for HVAC
+decrease_temp <= decrease;
+increase_temp <= increase;
+run_nEN <= run_n;
