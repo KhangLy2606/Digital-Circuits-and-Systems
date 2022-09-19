@@ -1,0 +1,492 @@
+|LogicalStep_Lab4_top
+Clk => Clock_Source:Clock_Selector.clk_input
+Clk => segment7_mux:inst_sev_mux.clk
+pb_n[0] => inverter:inst_invert.pb_in1
+pb_n[1] => inverter:inst_invert.pb_in2
+pb_n[2] => inverter:inst_invert.pb_in3
+pb_n[3] => ~NO_FANOUT~
+sw[0] => theregister:inst_registery.data[0]
+sw[1] => theregister:inst_registery.data[1]
+sw[2] => theregister:inst_registery.data[2]
+sw[3] => theregister:inst_registery.data[3]
+sw[4] => theregister:inst_registerx.data[0]
+sw[5] => theregister:inst_registerx.data[1]
+sw[6] => theregister:inst_registerx.data[2]
+sw[7] => theregister:inst_registerx.data[3]
+leds[0] <= leds.DB_MAX_OUTPUT_PORT_TYPE
+leds[1] <= grappler:inst_grappler.grappler_on
+leds[2] <= Bidir_shift_reg:inst_Bi_shift_reg.REG_BITS[0]
+leds[3] <= Bidir_shift_reg:inst_Bi_shift_reg.REG_BITS[1]
+leds[4] <= Bidir_shift_reg:inst_Bi_shift_reg.REG_BITS[2]
+leds[5] <= Bidir_shift_reg:inst_Bi_shift_reg.REG_BITS[3]
+leds[6] <= <GND>
+leds[7] <= <GND>
+seg7_data[0] <= segment7_mux:inst_sev_mux.DOUT[0]
+seg7_data[1] <= segment7_mux:inst_sev_mux.DOUT[1]
+seg7_data[2] <= segment7_mux:inst_sev_mux.DOUT[2]
+seg7_data[3] <= segment7_mux:inst_sev_mux.DOUT[3]
+seg7_data[4] <= segment7_mux:inst_sev_mux.DOUT[4]
+seg7_data[5] <= segment7_mux:inst_sev_mux.DOUT[5]
+seg7_data[6] <= segment7_mux:inst_sev_mux.DOUT[6]
+seg7_char1 <= segment7_mux:inst_sev_mux.DIG2
+seg7_char2 <= segment7_mux:inst_sev_mux.DIG1
+
+
+|LogicalStep_Lab4_top|Clock_Source:Clock_Selector
+SIM_FLAG => clock_out.OUTPUTSELECT
+clk_input => clock_out.DATAB
+clk_input => \clk_divider:counter[0].CLK
+clk_input => \clk_divider:counter[1].CLK
+clk_input => \clk_divider:counter[2].CLK
+clk_input => \clk_divider:counter[3].CLK
+clk_input => \clk_divider:counter[4].CLK
+clk_input => \clk_divider:counter[5].CLK
+clk_input => \clk_divider:counter[6].CLK
+clk_input => \clk_divider:counter[7].CLK
+clk_input => \clk_divider:counter[8].CLK
+clk_input => \clk_divider:counter[9].CLK
+clk_input => \clk_divider:counter[10].CLK
+clk_input => \clk_divider:counter[11].CLK
+clk_input => \clk_divider:counter[12].CLK
+clk_input => \clk_divider:counter[13].CLK
+clk_input => \clk_divider:counter[14].CLK
+clk_input => \clk_divider:counter[15].CLK
+clk_input => \clk_divider:counter[16].CLK
+clk_input => \clk_divider:counter[17].CLK
+clk_input => \clk_divider:counter[18].CLK
+clk_input => \clk_divider:counter[19].CLK
+clk_input => \clk_divider:counter[20].CLK
+clk_input => \clk_divider:counter[21].CLK
+clk_input => \clk_divider:counter[22].CLK
+clk_input => \clk_divider:counter[23].CLK
+clock_out <= clock_out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|inverter:inst_invert
+pb_in1 => pb_out1.DATAIN
+pb_in2 => pb_out2.DATAIN
+pb_in3 => pb_out3.DATAIN
+pb_in4 => pb_out4.DATAIN
+pb_out1 <= pb_in1.DB_MAX_OUTPUT_PORT_TYPE
+pb_out2 <= pb_in2.DB_MAX_OUTPUT_PORT_TYPE
+pb_out3 <= pb_in3.DB_MAX_OUTPUT_PORT_TYPE
+pb_out4 <= pb_in4.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Grappler:inst_grappler
+clock => current_state~1.DATAIN
+Grappler_button => next_state.Opening.DATAA
+Grappler_button => next_state.Closing.DATAB
+Grappler_button => Selector1.IN1
+Grappler_button => Selector0.IN1
+grappler_en => current_state.Closing.OUTPUTSELECT
+grappler_en => current_state.close.OUTPUTSELECT
+grappler_en => current_state.Opening.OUTPUTSELECT
+grappler_en => current_state.Start.OUTPUTSELECT
+reset => current_state~3.DATAIN
+Grappler_on <= Grappler_on.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Extender:inst_extender
+clock => current_state~1.DATAIN
+reset => current_state~3.DATAIN
+extender => Transition_Section.IN0
+extender => Transition_Section.IN0
+extender_en => Transition_Section.IN1
+extender_en => Transition_Section.IN1
+ext_pos[0] => Equal0.IN0
+ext_pos[0] => Equal1.IN2
+ext_pos[0] => Equal2.IN3
+ext_pos[1] => Equal0.IN3
+ext_pos[1] => Equal1.IN1
+ext_pos[1] => Equal2.IN2
+ext_pos[2] => Equal0.IN2
+ext_pos[2] => Equal1.IN0
+ext_pos[2] => Equal2.IN1
+ext_pos[3] => Equal0.IN1
+ext_pos[3] => Equal1.IN3
+ext_pos[3] => Equal2.IN0
+extender_out <= Selector4.DB_MAX_OUTPUT_PORT_TYPE
+clk_en <= clk_en.DB_MAX_OUTPUT_PORT_TYPE
+left_right <= left_right.DB_MAX_OUTPUT_PORT_TYPE
+grappler_en <= Selector5.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Bidir_shift_reg:inst_Bi_shift_reg
+CLK => sreg[0].CLK
+CLK => sreg[1].CLK
+CLK => sreg[2].CLK
+CLK => sreg[3].CLK
+RESET => sreg[0].ACLR
+RESET => sreg[1].ACLR
+RESET => sreg[2].ACLR
+RESET => sreg[3].ACLR
+CLK_EN => sreg[2].ENA
+CLK_EN => sreg[1].ENA
+CLK_EN => sreg[0].ENA
+CLK_EN => sreg[3].ENA
+LEFT0_RIGHT1 => sreg.OUTPUTSELECT
+LEFT0_RIGHT1 => sreg.OUTPUTSELECT
+LEFT0_RIGHT1 => sreg.OUTPUTSELECT
+LEFT0_RIGHT1 => sreg.OUTPUTSELECT
+REG_BITS[0] <= sreg[0].DB_MAX_OUTPUT_PORT_TYPE
+REG_BITS[1] <= sreg[1].DB_MAX_OUTPUT_PORT_TYPE
+REG_BITS[2] <= sreg[2].DB_MAX_OUTPUT_PORT_TYPE
+REG_BITS[3] <= sreg[3].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|theregister:inst_registerx
+CLK => output[0]~reg0.CLK
+CLK => output[1]~reg0.CLK
+CLK => output[2]~reg0.CLK
+CLK => output[3]~reg0.CLK
+RESET => output[0]~reg0.ACLR
+RESET => output[1]~reg0.ACLR
+RESET => output[2]~reg0.ACLR
+RESET => output[3]~reg0.ACLR
+CLK_EN => output[0]~reg0.ENA
+CLK_EN => output[1]~reg0.ENA
+CLK_EN => output[2]~reg0.ENA
+CLK_EN => output[3]~reg0.ENA
+data[0] => output[0]~reg0.DATAIN
+data[1] => output[1]~reg0.DATAIN
+data[2] => output[2]~reg0.DATAIN
+data[3] => output[3]~reg0.DATAIN
+output[0] <= output[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[1] <= output[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[2] <= output[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[3] <= output[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|theregister:inst_registery
+CLK => output[0]~reg0.CLK
+CLK => output[1]~reg0.CLK
+CLK => output[2]~reg0.CLK
+CLK => output[3]~reg0.CLK
+RESET => output[0]~reg0.ACLR
+RESET => output[1]~reg0.ACLR
+RESET => output[2]~reg0.ACLR
+RESET => output[3]~reg0.ACLR
+CLK_EN => output[0]~reg0.ENA
+CLK_EN => output[1]~reg0.ENA
+CLK_EN => output[2]~reg0.ENA
+CLK_EN => output[3]~reg0.ENA
+data[0] => output[0]~reg0.DATAIN
+data[1] => output[1]~reg0.DATAIN
+data[2] => output[2]~reg0.DATAIN
+data[3] => output[3]~reg0.DATAIN
+output[0] <= output[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[1] <= output[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[2] <= output[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+output[3] <= output[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|XY_motion:inst_XY
+clk => ~NO_FANOUT~
+X_GT => process_0.IN0
+X_EQ => process_0.IN1
+X_EQ => process_0.IN0
+X_EQ => process_0.IN0
+X_LT => process_0.IN0
+Motion => process_0.IN0
+Motion => process_0.IN0
+Motion => process_0.IN1
+Motion => process_0.IN1
+Motion => process_0.IN1
+Motion => process_0.IN0
+Motion => process_0.IN0
+Motion => process_0.IN0
+Y_LT => process_0.IN1
+Y_EQ => process_0.IN1
+Y_EQ => process_0.IN1
+Y_EQ => process_0.IN1
+Y_GT => process_0.IN1
+extender_out => process_0.IN1
+extender_out => comb.IN1
+extender_out => error.IN1
+extender_out => comb.IN1
+extender_out => process_0.IN1
+clk_enx <= clk_enx$latch.DB_MAX_OUTPUT_PORT_TYPE
+up_downx <= up_downx$latch.DB_MAX_OUTPUT_PORT_TYPE
+error <= error$latch.DB_MAX_OUTPUT_PORT_TYPE
+Capture_XY <= process_0.DB_MAX_OUTPUT_PORT_TYPE
+clk_eny <= clk_eny$latch.DB_MAX_OUTPUT_PORT_TYPE
+up_downy <= up_downy$latch.DB_MAX_OUTPUT_PORT_TYPE
+extender_en <= process_0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|U_D_Bin_Counter4bit:inst_counterx
+CLK => un_bin_counter[0].CLK
+CLK => un_bin_counter[1].CLK
+CLK => un_bin_counter[2].CLK
+CLK => un_bin_counter[3].CLK
+RESET => un_bin_counter[0].ACLR
+RESET => un_bin_counter[1].ACLR
+RESET => un_bin_counter[2].ACLR
+RESET => un_bin_counter[3].ACLR
+CLK_EN => process_0.IN0
+CLK_EN => process_0.IN0
+UP1_DOWN0 => process_0.IN1
+UP1_DOWN0 => process_0.IN1
+COUNTER_BITS[0] <= un_bin_counter[0].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[1] <= un_bin_counter[1].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[2] <= un_bin_counter[2].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[3] <= un_bin_counter[3].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|U_D_Bin_Counter4bit:inst_countery
+CLK => un_bin_counter[0].CLK
+CLK => un_bin_counter[1].CLK
+CLK => un_bin_counter[2].CLK
+CLK => un_bin_counter[3].CLK
+RESET => un_bin_counter[0].ACLR
+RESET => un_bin_counter[1].ACLR
+RESET => un_bin_counter[2].ACLR
+RESET => un_bin_counter[3].ACLR
+CLK_EN => process_0.IN0
+CLK_EN => process_0.IN0
+UP1_DOWN0 => process_0.IN1
+UP1_DOWN0 => process_0.IN1
+COUNTER_BITS[0] <= un_bin_counter[0].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[1] <= un_bin_counter[1].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[2] <= un_bin_counter[2].DB_MAX_OUTPUT_PORT_TYPE
+COUNTER_BITS[3] <= un_bin_counter[3].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compx
+A[0] => Compx1:A_0.A_n
+A[1] => Compx1:A_1.A_n
+A[2] => Compx1:A_2.A_n
+A[3] => Compx1:A_3.A_n
+B[0] => Compx1:A_0.B_n
+B[1] => Compx1:A_1.B_n
+B[2] => Compx1:A_2.B_n
+B[3] => Compx1:A_3.B_n
+AGTB <= AGTB.DB_MAX_OUTPUT_PORT_TYPE
+AEQB <= AEQB.DB_MAX_OUTPUT_PORT_TYPE
+ALTB <= ALTB.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compx|Compx1:A_3
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compx|Compx1:A_2
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compx|Compx1:A_1
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compx|Compx1:A_0
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compy
+A[0] => Compx1:A_0.A_n
+A[1] => Compx1:A_1.A_n
+A[2] => Compx1:A_2.A_n
+A[3] => Compx1:A_3.A_n
+B[0] => Compx1:A_0.B_n
+B[1] => Compx1:A_1.B_n
+B[2] => Compx1:A_2.B_n
+B[3] => Compx1:A_3.B_n
+AGTB <= AGTB.DB_MAX_OUTPUT_PORT_TYPE
+AEQB <= AEQB.DB_MAX_OUTPUT_PORT_TYPE
+ALTB <= ALTB.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compy|Compx1:A_3
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compy|Compx1:A_2
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compy|Compx1:A_1
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|Compx4:inst_compy|Compx1:A_0
+A_n => AGTB_n.IN0
+A_n => AEQB_n.IN0
+A_n => ALTB_n.IN0
+B_n => AEQB_n.IN1
+B_n => ALTB_n.IN1
+B_n => AGTB_n.IN1
+AGTB_n <= AGTB_n.DB_MAX_OUTPUT_PORT_TYPE
+AEQB_n <= AEQB_n.DB_MAX_OUTPUT_PORT_TYPE
+ALTB_n <= ALTB_n.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|SevenSegment:inst_sev_secx
+hex[0] => Mux0.IN19
+hex[0] => Mux1.IN19
+hex[0] => Mux2.IN19
+hex[0] => Mux3.IN19
+hex[0] => Mux4.IN19
+hex[0] => Mux5.IN19
+hex[0] => Mux6.IN19
+hex[1] => Mux0.IN18
+hex[1] => Mux1.IN18
+hex[1] => Mux2.IN18
+hex[1] => Mux3.IN18
+hex[1] => Mux4.IN18
+hex[1] => Mux5.IN18
+hex[1] => Mux6.IN18
+hex[2] => Mux0.IN17
+hex[2] => Mux1.IN17
+hex[2] => Mux2.IN17
+hex[2] => Mux3.IN17
+hex[2] => Mux4.IN17
+hex[2] => Mux5.IN17
+hex[2] => Mux6.IN17
+hex[3] => Mux0.IN16
+hex[3] => Mux1.IN16
+hex[3] => Mux2.IN16
+hex[3] => Mux3.IN16
+hex[3] => Mux4.IN16
+hex[3] => Mux5.IN16
+hex[3] => Mux6.IN16
+sevenseg[0] <= Mux6.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[1] <= Mux5.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[2] <= Mux4.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[3] <= Mux3.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[4] <= Mux2.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[5] <= Mux1.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[6] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|SevenSegment:inst_sev_secy
+hex[0] => Mux0.IN19
+hex[0] => Mux1.IN19
+hex[0] => Mux2.IN19
+hex[0] => Mux3.IN19
+hex[0] => Mux4.IN19
+hex[0] => Mux5.IN19
+hex[0] => Mux6.IN19
+hex[1] => Mux0.IN18
+hex[1] => Mux1.IN18
+hex[1] => Mux2.IN18
+hex[1] => Mux3.IN18
+hex[1] => Mux4.IN18
+hex[1] => Mux5.IN18
+hex[1] => Mux6.IN18
+hex[2] => Mux0.IN17
+hex[2] => Mux1.IN17
+hex[2] => Mux2.IN17
+hex[2] => Mux3.IN17
+hex[2] => Mux4.IN17
+hex[2] => Mux5.IN17
+hex[2] => Mux6.IN17
+hex[3] => Mux0.IN16
+hex[3] => Mux1.IN16
+hex[3] => Mux2.IN16
+hex[3] => Mux3.IN16
+hex[3] => Mux4.IN16
+hex[3] => Mux5.IN16
+hex[3] => Mux6.IN16
+sevenseg[0] <= Mux6.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[1] <= Mux5.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[2] <= Mux4.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[3] <= Mux3.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[4] <= Mux2.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[5] <= Mux1.DB_MAX_OUTPUT_PORT_TYPE
+sevenseg[6] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|LogicalStep_Lab4_top|segment7_mux:inst_sev_mux
+clk => \clk_proc:COUNT[0].CLK
+clk => \clk_proc:COUNT[1].CLK
+clk => \clk_proc:COUNT[2].CLK
+clk => \clk_proc:COUNT[3].CLK
+clk => \clk_proc:COUNT[4].CLK
+clk => \clk_proc:COUNT[5].CLK
+clk => \clk_proc:COUNT[6].CLK
+clk => \clk_proc:COUNT[7].CLK
+clk => \clk_proc:COUNT[8].CLK
+clk => \clk_proc:COUNT[9].CLK
+clk => \clk_proc:COUNT[10].CLK
+DIN2[0] => DOUT_TEMP.DATAB
+DIN2[1] => DOUT_TEMP[1].DATAB
+DIN2[2] => DOUT_TEMP.DATAB
+DIN2[3] => DOUT_TEMP.DATAB
+DIN2[4] => DOUT_TEMP.DATAB
+DIN2[5] => DOUT_TEMP[5].DATAB
+DIN2[6] => DOUT_TEMP[6].DATAB
+DIN1[0] => DOUT_TEMP.DATAA
+DIN1[1] => DOUT_TEMP[1].DATAA
+DIN1[2] => DOUT_TEMP.DATAA
+DIN1[3] => DOUT_TEMP.DATAA
+DIN1[4] => DOUT_TEMP.DATAA
+DIN1[5] => DOUT_TEMP[5].DATAA
+DIN1[6] => DOUT_TEMP[6].DATAA
+DOUT[0] <= DOUT_TEMP.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[1] <= DOUT[1].DB_MAX_OUTPUT_PORT_TYPE
+DOUT[2] <= DOUT_TEMP.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[3] <= DOUT_TEMP.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[4] <= DOUT_TEMP.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[5] <= DOUT[5].DB_MAX_OUTPUT_PORT_TYPE
+DOUT[6] <= DOUT[6].DB_MAX_OUTPUT_PORT_TYPE
+DIG2 <= \clk_proc:COUNT[10].DB_MAX_OUTPUT_PORT_TYPE
+DIG1 <= \clk_proc:COUNT[10].DB_MAX_OUTPUT_PORT_TYPE
+
+

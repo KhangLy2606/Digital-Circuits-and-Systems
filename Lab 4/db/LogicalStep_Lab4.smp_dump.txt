@@ -1,0 +1,14 @@
+
+State Machine - |LogicalStep_Lab4_top|Extender:inst_extender|current_state
+Name current_state.left_shift current_state.Right_shift current_state.Pressed current_state.Idle 
+current_state.Idle 0 0 0 0 
+current_state.Pressed 0 0 1 1 
+current_state.Right_shift 0 1 0 1 
+current_state.left_shift 1 0 0 1 
+
+State Machine - |LogicalStep_Lab4_top|Grappler:inst_grappler|current_state
+Name current_state.Closing current_state.close current_state.Opening current_state.Start 
+current_state.Start 0 0 0 0 
+current_state.Opening 0 0 1 1 
+current_state.close 0 1 0 1 
+current_state.Closing 1 0 0 1 

@@ -1,0 +1,85 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+Entity Grappler is port(
+
+				Grappler_button, grappler_en				:in std_logic;
+				Grappler_on										:out std_logic
+						
+				);
+end Entity;
+
+architecture grapple of Grappler is 
+
+ 
+ TYPE STATE_NAMES IS (Off_state, On_state);   -- list all the STATE_NAMES values
+
+ 
+ SIGNAL current_state, next_state	:  STATE_NAMES;     	-- signals of type STATE_NAMES
+
+
+  BEGIN
+ 
+ --------------------------------------------------------------------------------
+ --State Machine:
+ --------------------------------------------------------------------------------
+
+ -- REGISTER_LOGIC PROCESS:
+ 
+Register_Section: PROCESS (clk_input, rst_n, next_state)  -- this process synchronizes the activity to a clock
+BEGIN
+	IF (rst_n = '0') THEN
+		current_state <= Off_state;
+	ELSIF(rising_edge(clk_input)) THEN
+		current_state <= next_State;
+	END IF;
+END PROCESS;	
+
+
+
+-- TRANSITION LOGIC PROCESS
+
+Transition_Section: PROCESS (current_state,Grappler_button, Grappler_en) 
+
+BEGIN
+     CASE current_state IS
+         WHEN Off_state =>		
+				IF( Grappler_button = '0' AND Grappler_en= '1' ) THEN --pressed
+					next_state <= On_state;
+					
+				ELSE
+					next_state <= Off_state;
+				END IF;
+
+			WHEN On_state=>		
+				IF( Grappler_button = '0' OR Grappler_en= '0') THEN --pressed
+					next_state <= Off_state;
+				ELSE
+					next_state <= On_state;
+				END IF;
+				
+			WHEN OTHERS =>
+               next_state <= Off_state;
+ 		END CASE;
+ END PROCESS;
+
+-- DECODER SECTION PROCESS
+
+Decoder_Section: PROCESS (current_state,Grappler_button, Grappler_en)
+
+BEGIN
+     CASE current_state IS
+         WHEN Off_state =>	
+				Grappler_on <= '0';
+	
+         WHEN On_state=>		
+				Grappler_on <= '1';
+				
+         WHEN others =>		
+ 				Grappler_on <= '0';
+
+	  END CASE;
+ END PROCESS;
+
+ END ARCHITECTURE grapple;

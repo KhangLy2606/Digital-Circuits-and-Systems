@@ -1,0 +1,33 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+Entity theregister is port(
+
+				input 					:in std_logic_vector (3 downto 0);
+				capture_XY   			:in std_logic;
+				output				:out std_logic_vector(3 downto 0)
+					
+				);
+end Entity;
+
+ARCHITECTURE reg of theregister is 
+
+begin 
+
+process (capture_XY) is
+
+begin 
+
+if (capture_XY = '1') then
+
+	output <= input;
+end if;
+
+end process;
+
+end reg;
+	
+
+
+ 
